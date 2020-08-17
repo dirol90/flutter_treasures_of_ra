@@ -1,0 +1,53 @@
+name: treasuresofra
+description: Treasures of Ra.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_launcher_icons: ^0.7.3
+  url_launcher: ^5.5.0
+  flip_card: ^0.4.4
+
+  cupertino_icons: ^0.1.3
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.7.3
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icon/icon.png
+    - assets/elements/app_logo.png
+    - assets/elements/app_name.png
+    - assets/elements/bg.png
+    - assets/elements/start_btn.png
+    - assets/elements/element_bg.png
+    - assets/elements/stars_0.png
+    - assets/elements/stars_1.png
+    - assets/elements/stars_2.png
+    - assets/elements/stars_3.png
+    - assets/elements/settings_btn.png
+    - assets/elements/back_btn.png
+    - assets/elements/dialog_bg.png
+    - assets/elements/play_btn.png
+    - assets/elements/pause_btn.png
+
+  fonts:
+    - family: Dimbo
+      fonts:
+        - asset: assets/fonts/dimbo.ttf
