@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:treasuresofra/views/card_view.dart';
 
+import 'level_complet_screen.dart';
+
 class GameScreen extends StatefulWidget {
   static String route = "/game_screen";
 
@@ -17,7 +19,7 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _fillCovers(64);
+    _fillCovers(12);
     _startTimeCounter(90);
 
     return Scaffold(
@@ -41,14 +43,14 @@ class _GameScreenState extends State<GameScreen> {
                 )
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 82.0, bottom: 82.0),
+                padding: const EdgeInsets.only(top: 64.0, bottom: 64.0),
                 child: Container(
                   height: MediaQuery.of(context).size.height-80,
                   width: MediaQuery.of(context).size.width,
                   child: GridView.builder(
                     itemCount: _covers.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4),
+                        crossAxisCount: 3),
                     itemBuilder: (BuildContext context, int index) {
                       return CardsView(_covers[index]);
                     },
@@ -93,6 +95,7 @@ class _GameScreenState extends State<GameScreen> {
             _timer.cancel();
             _timer = null;
             _timeCounterText = "";
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => LevelCompletedScreen()));
           }
         });
       });

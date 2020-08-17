@@ -13,7 +13,7 @@ class LevelScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    fillList(32);
+    fillList(25);
 
     return Scaffold(
       body: Container(
@@ -63,8 +63,7 @@ class LevelScreen extends StatelessWidget {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3),
                     itemBuilder: (BuildContext context, int index) {
-                      var rng = new Random();
-                      return LevelView(index+1, false, rng.nextInt(3));
+                      return LevelView(index+1, false, 0);
                     },
                   ),
                 ),

@@ -46,6 +46,11 @@ class PreGameScreen extends StatelessWidget {
                   child: Stack(
                     children: <Widget>[
                       Image.asset('assets/elements/dialog_bg.png', width: MediaQuery.of(context).size.width/10*8,),
+                      Align(alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.only( bottom: 16.0),
+                          child: Text('In order to get 3 stars\nfinish the level\nunder 2,5 minutes', style: TextStyle(fontSize: 32, color: Colors.white, fontFamily: "Dimbo",), textAlign: TextAlign.center,),
+                        ),),
                       Align(alignment: Alignment.bottomCenter,
                         child: GestureDetector(
                           onTap: (){

@@ -14,11 +14,15 @@ dependencies:
   flutter_launcher_icons: ^0.7.3
   url_launcher: ^5.5.0
   flip_card: ^0.4.4
+  flutter_webview_plugin: ^0.3.11
+  flutter_facebook_app_links: ^1.1.0+1
+  facebook_deeplinks: ^0.1.0
+  shared_preferences: ^0.5.8
+  flutter_string_encryption: ^0.3.1
 
   cupertino_icons: ^0.1.3
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.7.3
   flutter_test:
     sdk: flutter
 
@@ -46,6 +50,18 @@ flutter:
     - assets/elements/dialog_bg.png
     - assets/elements/play_btn.png
     - assets/elements/pause_btn.png
+    - assets/elements/card_back.png
+    - assets/elements/card_1.png
+    - assets/elements/card_2.png
+    - assets/elements/card_3.png
+    - assets/elements/card_4.png
+    - assets/elements/card_5.png
+    - assets/elements/card_6.png
+    - assets/elements/review.png
+    - assets/elements/sound_off.png
+    - assets/elements/sound_on.png
+    - assets/elements/next.png
+    - assets/elements/restart.png
 
   fonts:
     - family: Dimbo

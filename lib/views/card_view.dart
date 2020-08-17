@@ -25,7 +25,7 @@ class _CardsViewState extends State<CardsView> {
         width: MediaQuery.of(context).size.width/6*1,
         child: Stack(
           children: <Widget>[
-            Align(alignment: Alignment.center, child: ColorFiltered(colorFilter: ColorFilter.mode(widget.isOpened ? Colors.white: Colors.red, BlendMode.color), child: Image.asset('assets/elements/element_bg.png', height: MediaQuery.of(context).size.width/6*1, width: MediaQuery.of(context).size.width/6*1, ))),
+            Align(alignment: Alignment.center, child: Image.asset('assets/elements/card_back.png', height: MediaQuery.of(context).size.width/6*1, width: MediaQuery.of(context).size.width/6*1, )),
           ],
         ),
       ),
@@ -34,7 +34,7 @@ class _CardsViewState extends State<CardsView> {
         width: MediaQuery.of(context).size.width/6*1,
         child: Stack(
           children: <Widget>[
-            Align(alignment: Alignment.center, child: ColorFiltered(colorFilter: ColorFilter.mode(widget.isOpened ? Colors.white: Colors.red, BlendMode.color), child: Image.asset('assets/elements/element_bg.png', height: MediaQuery.of(context).size.width/6*1, width: MediaQuery.of(context).size.width/6*1, ))),
+            Align(alignment: Alignment.center, child: Image.asset('assets/elements/card_1.png', height: MediaQuery.of(context).size.width/6*1, width: MediaQuery.of(context).size.width/6*1, )),
           ],
         ),
       ),

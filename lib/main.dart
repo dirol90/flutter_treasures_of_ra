@@ -5,6 +5,9 @@ import 'package:treasuresofra/ui/main_screen.dart';
 import 'package:treasuresofra/ui/pre_game_screen.dart';
 import 'package:treasuresofra/ui/settings_screen.dart';
 import 'package:treasuresofra/ui/splash_screen.dart';
+import 'package:treasuresofra/ui/web_view_screen.dart';
+
+import 'ui/level_complet_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +29,8 @@ class MyApp extends StatelessWidget {
         SettingsScreen.route: (context) => SettingsScreen(),
         PreGameScreen.route: (context) => PreGameScreen(),
         GameScreen.route: (context) => GameScreen(),
+        WebViewScreen.route: (context) => WebViewScreen(),
+        LevelCompletedScreen.route: (context) => LevelCompletedScreen(),
       },
       initialRoute: SplashScreen.route,
     );

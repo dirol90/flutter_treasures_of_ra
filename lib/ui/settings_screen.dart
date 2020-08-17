@@ -44,11 +44,33 @@ class SettingsScreen extends StatelessWidget {
                    child: Stack(
                      children: <Widget>[
                        Image.asset('assets/elements/dialog_bg.png', width: MediaQuery.of(context).size.width/10*8,),
-                       Align(alignment: Alignment.bottomCenter,
+                       Align(alignment: Alignment.center,
                          child: Padding(
-                           padding: const EdgeInsets.only( bottom: 16.0),
-                           child: Image.asset('assets/elements/play_btn.png', height: MediaQuery.of(context).size.width/10*1, width: MediaQuery.of(context).size.width/10*1.5,),
-                         ),),
+                           padding: const EdgeInsets.only(top: 64.0),
+                           child: Column(
+                             children: <Widget>[
+                               GestureDetector(
+                                 onTap: (){
+
+                                 },
+                                 child: Padding(
+                                   padding: const EdgeInsets.all(16.0),
+                                   child: Image.asset('assets/elements/sound_on.png', width: MediaQuery.of(context).size.width/3*1,),
+                                 ),
+                               ),
+                               GestureDetector(
+                                 onTap: (){
+
+                                 },
+                                 child: Padding(
+                                   padding: const EdgeInsets.all(16.0),
+                                   child: Image.asset('assets/elements/review.png', width: MediaQuery.of(context).size.width/3*1,),
+                                 ),
+                               )
+                             ],
+                           ),
+                         ),
+                       ),
                      ],
                    ),
                  ),
