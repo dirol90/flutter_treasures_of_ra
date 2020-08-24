@@ -19,6 +19,7 @@ dependencies:
   facebook_deeplinks: ^0.1.0
   shared_preferences: ^0.5.8
   flutter_string_encryption: ^0.3.1
+  onesignal_flutter: ^2.0.0
 
   cupertino_icons: ^0.1.3
 

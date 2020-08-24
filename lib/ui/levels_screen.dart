@@ -63,7 +63,7 @@ class LevelScreen extends StatelessWidget {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3),
                     itemBuilder: (BuildContext context, int index) {
-                      return LevelView(index+1, false, 0);
+                      return LevelView(index+1, false, -1);
                     },
                   ),
                 ),

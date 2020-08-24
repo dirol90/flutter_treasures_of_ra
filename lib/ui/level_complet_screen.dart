@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_string_encryption/flutter_string_encryption.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'game_screen.dart';
 
 class LevelCompletedScreen extends StatelessWidget {
   static String route = "/level_completed_screen";
 
+  int index = -1;
+  int spendTime = -1;
+  LevelCompletedScreen({this.index, this.spendTime});
+
   @override
   Widget build(BuildContext context) {
-
+    _setSharedPref();
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -49,7 +57,9 @@ class LevelCompletedScreen extends StatelessWidget {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: Image.asset('assets/elements/stars_1.png', width: MediaQuery.of(context).size.width/3*1,),
+                              child: Image.asset('assets/elements/stars_${(index < 10 && spendTime < 60 || index < 20 && spendTime < 45 || index > 20 && spendTime < 30) ? '3' :
+                              (index < 10 && spendTime < 90 || index < 20 && spendTime < 60 || index > 20 && spendTime < 45) ? '2' : '1'
+                              }.png', width: MediaQuery.of(context).size.width/3*1,),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -61,7 +71,7 @@ class LevelCompletedScreen extends StatelessWidget {
                               children: <Widget>[
                                 GestureDetector(
                                   onTap: (){
-
+                                    nextScreen(context);
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
@@ -70,7 +80,7 @@ class LevelCompletedScreen extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: (){
-
+                                    popBack(context);
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
@@ -96,5 +106,17 @@ class LevelCompletedScreen extends StatelessWidget {
   void popBack(BuildContext context){
     Navigator.pop(context);
   }
+
+  void nextScreen(BuildContext context){
+    Navigator.pushNamed(context, GameScreen.route, arguments: index+1);
+  }
+
+  Future<void> _setSharedPref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('level$index', (index < 10 && spendTime < 60 || index < 20 && spendTime < 45 || index > 20 && spendTime < 30) ? 3 :
+    (index < 10 && spendTime < 90 || index < 20 && spendTime < 60 || index > 20 && spendTime < 45) ? 2 : 1);
+  }
+
+
 }
 

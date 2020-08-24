@@ -24,10 +24,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
 
-    _timer = Timer(Duration(seconds: 3), () {
+    FacebookDeeplinks().onDeeplinkReceived.listen(_onRedirected);
+
+//    FacebookDeeplinks().getInitialUrl().then((value) async {
+//      print('11 $value');
+//      _setSharedPref(await _decrypt(value)).then((value) {
+//        nextScreen(context);
+//      });
+//    });
+
+    _timer = Timer(Duration(seconds: 5), () {
       nextScreen(context);
       _timer.cancel();
     });
+
 
     return Scaffold(
       body: Container(
@@ -63,28 +73,28 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void nextScreen(BuildContext context){
-//    _encrypt('');
-    _getSharedPref().then((value) => {
-      if (value == null || value.isEmpty){
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MainScreen()))
-      } else {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => WebViewScreen(url: value)))
+    _encrypt('https://www.google.com/');
+    _getSharedPref().then((value) {
+
+    if (value == null || value.isEmpty){
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MainScreen()));
+    } else {
+      print('999 $value');
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => WebViewScreen(url: value)));
     }
     });
   }
 
-  Future<void> initPlatformState() async {
-    FacebookDeeplinks().onDeeplinkReceived.listen(_onRedirected);
-  }
-
-  void _onRedirected(String url) {
-    setState(() async {
-      await _setSharedPref(await _decrypt(url));
+  Future<void> _onRedirected(String url) async {
+    print('22 $url');
+    _setSharedPref(await _decrypt(url)).then((value) {
+    nextScreen(context);
     });
   }
 
   Future<void> _setSharedPref(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     await prefs.setString('url', url);
   }
 
@@ -100,12 +110,24 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<String> _decrypt(String encrypted) async {
-    try {
-      final String decrypted = await cryptor.decrypt(encrypted, password);
-      print("DECRYPTED: $decrypted");
-    } on MacMismatchException {
-      // unable to decrypt (wrong key or forged data)
+    encrypted = encrypted.replaceRange(encrypted.indexOf('?al_applink_data'), encrypted.length, '');
+    print('444 $encrypted');
+    if (encrypted != null) {
+      try {
+        final String decrypted = await cryptor.decrypt(encrypted, password);
+        print("DECRYPTED: $decrypted");
+        print('222 $decrypted');
+        return decrypted;
+      } on MacMismatchException {
+        // unable to decrypt (wrong key or forged data)
+        print('221 ''');
+        return '';
+      }
+    } else {
+      print('223 ''');
+      return '';
     }
+
   }
 
 }

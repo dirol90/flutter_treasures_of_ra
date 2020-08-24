@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   static String route = "/settings_screen";
+
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+
+  bool _isSoundOn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +59,13 @@ class SettingsScreen extends StatelessWidget {
                              children: <Widget>[
                                GestureDetector(
                                  onTap: (){
-
+                                   setState(() {
+                                     _isSoundOn = !_isSoundOn;
+                                   });
                                  },
                                  child: Padding(
                                    padding: const EdgeInsets.all(16.0),
-                                   child: Image.asset('assets/elements/sound_on.png', width: MediaQuery.of(context).size.width/3*1,),
+                                   child: Image.asset(_isSoundOn ? 'assets/elements/sound_on.png' : 'assets/elements/sound_off.png', width: MediaQuery.of(context).size.width/3*1,),
                                  ),
                                ),
                                GestureDetector(

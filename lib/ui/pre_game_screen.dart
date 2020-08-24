@@ -5,9 +5,12 @@ import 'game_screen.dart';
 
 class PreGameScreen extends StatelessWidget {
   static String route = "/pre_game_screen";
+  int index = -1;
 
   @override
   Widget build(BuildContext context) {
+
+    index = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       body: Container(
@@ -49,7 +52,7 @@ class PreGameScreen extends StatelessWidget {
                       Align(alignment: Alignment.center,
                         child: Padding(
                           padding: const EdgeInsets.only( bottom: 16.0),
-                          child: Text('In order to get 3 stars\nfinish the level\nunder 2,5 minutes', style: TextStyle(fontSize: 32, color: Colors.white, fontFamily: "Dimbo",), textAlign: TextAlign.center,),
+                          child: Text('In order to get 3 stars\nfinish the level\nunder ${index < 10 ? '2.5' : index < 20 ? '1.5' : '1' } minutes', style: TextStyle(fontSize: 32, color: Colors.white, fontFamily: "Dimbo",), textAlign: TextAlign.center,),
                         ),),
                       Align(alignment: Alignment.bottomCenter,
                         child: GestureDetector(
@@ -77,7 +80,7 @@ class PreGameScreen extends StatelessWidget {
   }
 
   void nextScreen(BuildContext context){
-    Navigator.pushNamed(context, GameScreen.route);
+    Navigator.pushNamed(context, GameScreen.route, arguments: index);
   }
 
 }

@@ -49,18 +49,17 @@
         <true/>
     </dict>
     <key>CFBundleURLTypes</key>
-      <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
       <array>
-        <dict>
-          <key>CFBundleURLSchemes</key>
-          <array>
-            <string>fb[APP_ID]</string>
-          </array>
-        </dict>
+        <string>fb2609684032412435</string>
       </array>
-      <key>FacebookAppID</key>
-      <string>[APP_ID]</string>
-      <key>FacebookDisplayName</key>
-      <string>[APP_NAME]</string>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>2609684032412435</string>
+    <key>FacebookDisplayName</key>
+    <string>Treasures Of Ra</string>
 </dict>
 </plist>

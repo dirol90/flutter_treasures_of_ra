@@ -4,9 +4,15 @@ import 'package:flutter/widgets.dart';
 
 class CardsView extends StatefulWidget {
 
-  bool isOpened;
+  List<bool> _isVisibleList;
+  List<bool> _covers;
+  List<int> _coversIndex;
+  Function f;
+  int index;
 
-  CardsView(this.isOpened);
+  GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
+
+  CardsView(this._covers, this._coversIndex, this._isVisibleList, this.f, this.index);
 
   @override
   _CardsViewState createState() => _CardsViewState();
@@ -15,9 +21,16 @@ class CardsView extends StatefulWidget {
 class _CardsViewState extends State<CardsView> {
   @override
   Widget build(BuildContext context) {
-    return FlipCard(
+
+
+    return widget._isVisibleList[widget.index] ? FlipCard(
+      key: widget.cardKey,
       onFlip: (){
         changeState();
+      },
+      onFlipDone: (isFront) {
+        bool isFlipped = !isFront;
+        if (!isFlipped && widget._covers[widget.index]) widget.cardKey?.currentState?.toggleCard();
       },
       direction: FlipDirection.HORIZONTAL, // default
       front: Container(
@@ -34,16 +47,17 @@ class _CardsViewState extends State<CardsView> {
         width: MediaQuery.of(context).size.width/6*1,
         child: Stack(
           children: <Widget>[
-            Align(alignment: Alignment.center, child: Image.asset('assets/elements/card_1.png', height: MediaQuery.of(context).size.width/6*1, width: MediaQuery.of(context).size.width/6*1, )),
+            Align(alignment: Alignment.center, child: Image.asset('assets/elements/card_${widget._coversIndex[widget.index]}.png', height: MediaQuery.of(context).size.width/6*1, width: MediaQuery.of(context).size.width/6*1, )),
           ],
         ),
       ),
-    );
+    ) : Container();
   }
 
   void changeState(){
     setState(() {
-      widget.isOpened = !widget.isOpened;
+      widget._covers[widget.index] = !widget._covers[widget.index];
+      widget.f();
     });
   }
 }
