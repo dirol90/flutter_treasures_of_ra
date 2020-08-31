@@ -35,7 +35,7 @@ class WebViewScreen extends StatelessWidget {
             appCacheEnabled: true,
             useWideViewPort: true,
             ignoreSSLErrors: true,
-            userAgent: 'Mozilla/5.0 (Linux; Android 7.0; SM-G930F Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.91 Mobile Safari/537.36 webview_android_dl',
+            userAgent: 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv webview_android_dl) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36',
 
             initialChild: Container(
               color: Colors.black,

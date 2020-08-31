@@ -73,20 +73,18 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void nextScreen(BuildContext context){
-    _encrypt('https://www.google.com/');
+//    _encrypt('URL_HERE');
     _getSharedPref().then((value) {
 
     if (value == null || value.isEmpty){
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MainScreen()));
     } else {
-      print('999 $value');
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => WebViewScreen(url: value)));
     }
     });
   }
 
   Future<void> _onRedirected(String url) async {
-    print('22 $url');
     _setSharedPref(await _decrypt(url)).then((value) {
     nextScreen(context);
     });
@@ -111,20 +109,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<String> _decrypt(String encrypted) async {
     encrypted = encrypted.replaceRange(encrypted.indexOf('?al_applink_data'), encrypted.length, '');
-    print('444 $encrypted');
     if (encrypted != null) {
       try {
         final String decrypted = await cryptor.decrypt(encrypted, password);
         print("DECRYPTED: $decrypted");
-        print('222 $decrypted');
         return decrypted;
       } on MacMismatchException {
         // unable to decrypt (wrong key or forged data)
-        print('221 ''');
         return '';
       }
     } else {
-      print('223 ''');
       return '';
     }
 

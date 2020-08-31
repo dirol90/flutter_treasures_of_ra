@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:treasuresofra/ui/levels_screen.dart';
+import 'package:treasuresofra/ui/web_view_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainScreen extends StatelessWidget {
@@ -50,12 +53,12 @@ class MainScreen extends StatelessWidget {
                     children: <Widget>[
                       GestureDetector(
                           onTap: (){
-                            _launchURLWithPolicy();
+                            _launchURLWithPolicy(context);
                           },
                           child: Text('PRIVACY POLICY', style: TextStyle(fontSize: 14, color: Colors.white, fontFamily: "Dimbo"),)),
                       GestureDetector(
                           onTap: (){
-                            _launchURLWithTerms();
+                            _launchURLWithTerms(context);
                           },
                           child: Text('TERMS & CONDITIONS', style: TextStyle(fontSize: 14, color: Colors.white, fontFamily: "Dimbo"),)),
                     ],
@@ -73,19 +76,19 @@ class MainScreen extends StatelessWidget {
     Navigator.pushNamed(context, LevelScreen.route);
   }
 
-  _launchURLWithPolicy() async {
-    const url = 'https://flutter.dev';
+  _launchURLWithPolicy(BuildContext context) async {
+    const url = 'https://sites.google.com/view/treasures-of-ra-privacy-policy/privacy-policy';
     if (await canLaunch(url)) {
-      await launch(url);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => WebViewScreen(url: url)));
     } else {
       throw 'Could not launch $url';
     }
   }
 
-  _launchURLWithTerms() async {
-    const url = 'https://flutter.dev';
+  _launchURLWithTerms(BuildContext context) async {
+    const url = 'https://sites.google.com/view/treasures-of-ra-terms-conditio/treasures-of-ra-tc';
     if (await canLaunch(url)) {
-      await launch(url);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => WebViewScreen(url: url)));
     } else {
       throw 'Could not launch $url';
     }
