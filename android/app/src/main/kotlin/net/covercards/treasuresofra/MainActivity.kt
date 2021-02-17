@@ -1,4 +1,4 @@
-package net.covercards.treasuresofra
+package net.covercards.treasuresofraapp
 
 import io.flutter.embedding.android.FlutterActivity
 

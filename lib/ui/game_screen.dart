@@ -78,7 +78,7 @@ class _GameScreenState extends State<GameScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: Image.asset(
-                        'assets/elements/pause_btn.png',
+                        _isNotPause ? 'assets/elements/pause_btn.png' : 'assets/elements/play_btn.png',
                         height: MediaQuery.of(context).size.width / 10 * 1,
                         width: MediaQuery.of(context).size.width / 10 * 1.5,
                       ),
