@@ -21,6 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   final cryptor = new PlatformStringCryptor();
   final password = "aMHp7UwTeAUf7JYTi+Opcg==:aOTvlL2z6iP/2DPczLdBr0jJMp1bmIOO6Cp9LMcr5jQ=";
 
+  var prefix = "treasuresofra://base=";
+
   @override
   Widget build(BuildContext context) {
 
@@ -32,6 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
 //        nextScreen(context);
 //      });
 //    });
+
+    // _onRedirected('treasuresofra://base=OnEQrWX0cYIrY1aMPcjLoA==:G+eo3CYDbHBFQEPSb2brarWMguXTCZaEnx29sqABXYo=:V5A43Vrxv5rPXghKWG84FAvUxx9Vi81MypUq5CZa+xQ=?al_applink_data=abc');
 
     _timer = Timer(Duration(seconds: 5), () {
       nextScreen(context);
@@ -108,6 +112,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<String> _decrypt(String encrypted) async {
+
+    encrypted = encrypted.replaceRange(0, prefix.length, '');
     encrypted = encrypted.replaceRange(encrypted.indexOf('?al_applink_data'), encrypted.length, '');
     if (encrypted != null) {
       try {
