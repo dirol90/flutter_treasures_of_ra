@@ -25,15 +25,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     FacebookDeeplinks().onDeeplinkReceived.listen(_onRedirected);
 
-//    FacebookDeeplinks().getInitialUrl().then((value) async {
-//      print('11 $value');
-//      _setSharedPref(await _decrypt(value)).then((value) {
-//        nextScreen(context);
-//      });
-//    });
+    FacebookDeeplinks().getInitialUrl().then((value) async {
+     _setSharedPref(await _decrypt(value)).then((value) {
+       nextScreen(context);
+     });
+   });
 
     // _onRedirected('treasuresofra://base=OnEQrWX0cYIrY1aMPcjLoA==:G+eo3CYDbHBFQEPSb2brarWMguXTCZaEnx29sqABXYo=:V5A43Vrxv5rPXghKWG84FAvUxx9Vi81MypUq5CZa+xQ=?al_applink_data=abc');
 
@@ -113,8 +111,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<String> _decrypt(String encrypted) async {
 
-    encrypted = encrypted.replaceRange(0, prefix.length, '');
-    encrypted = encrypted.replaceRange(encrypted.indexOf('?al_applink_data'), encrypted.length, '');
+    try {if (encrypted.contains(prefix)) encrypted = encrypted.replaceRange(0, prefix.length, '');} catch (e) {e;}
+    try {encrypted = encrypted.replaceRange(encrypted.indexOf('?al_applink_data'), encrypted.length, '');} catch (e) {e;}
+
     if (encrypted != null) {
       try {
         final String decrypted = await cryptor.decrypt(encrypted, password);
