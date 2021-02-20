@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 //import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:treasuresofra/ui/game_screen.dart';
 import 'package:treasuresofra/ui/levels_screen.dart';
@@ -6,7 +7,6 @@ import 'package:treasuresofra/ui/main_screen.dart';
 import 'package:treasuresofra/ui/pre_game_screen.dart';
 import 'package:treasuresofra/ui/settings_screen.dart';
 import 'package:treasuresofra/ui/splash_screen.dart';
-import 'package:treasuresofra/ui/web_view_screen.dart';
 
 import 'ui/level_complet_screen.dart';
 
@@ -33,9 +33,10 @@ class MyApp extends StatelessWidget {
       title: 'Treasures of Ra',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+          platform: TargetPlatform.iOS,
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          backgroundColor: Colors.black),
       routes: {
         SplashScreen.route: (context) => SplashScreen(),
         MainScreen.route: (context) => MainScreen(),
@@ -43,7 +44,6 @@ class MyApp extends StatelessWidget {
         SettingsScreen.route: (context) => SettingsScreen(),
         PreGameScreen.route: (context) => PreGameScreen(),
         GameScreen.route: (context) => GameScreen(),
-        WebViewScreen.route: (context) => WebViewScreen(),
         LevelCompletedScreen.route: (context) => LevelCompletedScreen(),
       },
       initialRoute: SplashScreen.route,
