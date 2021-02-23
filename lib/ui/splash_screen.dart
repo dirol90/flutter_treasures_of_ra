@@ -24,7 +24,14 @@ class _SplashScreenState extends State<SplashScreen> {
   String appNameImage = "assets/elements/app_name.png";
 
   final flutterWebViewPlugin = FlutterWebviewPlugin();
-  Widget _mainContainer;
+  Widget _mainContainer = Container(
+    color: Colors.black,
+    child: Center(
+      child: CircularProgressIndicator(
+        valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+      ),
+    ),
+  );
 
   void createMainContainer(BuildContext context) {
     setState(() {
@@ -132,11 +139,11 @@ class _SplashScreenState extends State<SplashScreen> {
     FacebookDeeplinks().getInitialUrl().then((value) async {
       _getSharedPref().then((value) async {
         if (value == null || value.isEmpty){
+          nextScreen();
+        } else {
           _setSharedPref(await Decryptor.decrypt(value)).then((value) {
             nextScreen();
           });
-        } else {
-          nextScreen();
         }
       });
     });
