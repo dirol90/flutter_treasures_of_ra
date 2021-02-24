@@ -213,6 +213,10 @@ class _MainScreenState extends State<MainScreen> {
           deepUrl = value;
         });
       });
+    } else {
+      _getSharedPref().then((value) async {
+        deepUrl = value;
+      });
     }
   }
 
