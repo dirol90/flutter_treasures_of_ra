@@ -211,7 +211,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
   void nextScreen() {
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 3), () {
       _getSharedPref().then((value) async {
         if (value == null || value.isEmpty) {
           Navigator.pushReplacement(context,

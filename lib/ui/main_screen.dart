@@ -1,9 +1,10 @@
-import 'dart:convert';
-
+import 'package:facebook_deeplinks/facebook_deeplinks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:treasuresofra/ui/levels_screen.dart';
 import 'package:treasuresofra/utils/decryptor.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,9 +22,18 @@ class _MainScreenState extends State<MainScreen> {
   final myController = TextEditingController();
   String bfUrl = '';
 
+  final flutterWebViewPlugin = FlutterWebviewPlugin();
+  String deepUrl = "";
+  bool isOpenWebView = false;
+
   @override
   void initState() {
     super.initState();
+    FacebookDeeplinks().onDeeplinkReceived.listen(_onRedirected);
+
+    FacebookDeeplinks().getInitialUrl().then((value) async {
+      _onRedirected(value);
+    });
   }
 
   void buildMainView() {
@@ -66,7 +76,11 @@ class _MainScreenState extends State<MainScreen> {
                             .width / 3 * 2,)),
                     GestureDetector(
                       onTap: () {
-                        _nextScreen(context);
+                        if (deepUrl.isEmpty) {
+                          _nextScreen(context);
+                        } else {
+                          createWebView(context, deepUrl);
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(top: 64.0),
@@ -157,10 +171,12 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (tapCounter >= 0){
-      buildMainView();
-    } else {
-      buildUrlCreator();
+    if (!isOpenWebView){
+      if (tapCounter >= 0){
+        buildMainView();
+      } else {
+        buildUrlCreator();
+      }
     }
 
     return Scaffold(
@@ -188,5 +204,94 @@ class _MainScreenState extends State<MainScreen> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  Future<void> _onRedirected(String url) async {
+    if (url != null && url.isNotEmpty) {
+      _setSharedPref(await Decryptor.decrypt(url)).then((value) {
+        _getSharedPref().then((value) async {
+          deepUrl = value;
+        });
+      });
+    }
+  }
+
+  Future<void> _setSharedPref(String url) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('url', url);
+  }
+
+  Future<String> _getSharedPref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('url');
+  }
+
+  Future<bool> _handleBack() async {
+    flutterWebViewPlugin.goBack();
+    return true;
+  }
+
+  void createWebView(BuildContext context, String url) {
+    setState(() {
+      isOpenWebView = true;
+      mainView = Container(
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        decoration: BoxDecoration(color: Colors.black),
+        child: SafeArea(
+          child: WebviewScaffold(
+            bottomNavigationBar: Container(
+              height: 48,
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: () {
+                          setState(() {
+                            _handleBack();
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            url: url,
+            withZoom: false,
+            displayZoomControls: false,
+            withLocalStorage: false,
+            hidden: false,
+            withJavascript: true,
+            clearCache: false,
+            clearCookies: false,
+            scrollBar: true,
+            supportMultipleWindows: true,
+            withOverviewMode: true,
+            appCacheEnabled: true,
+            useWideViewPort: true,
+            ignoreSSLErrors: true,
+            userAgent:
+            'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv webview_android_dl) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36',
+            initialChild: Container(
+              color: Colors.black,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+        ),
+      );
+    });
   }
 }
