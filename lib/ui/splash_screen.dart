@@ -137,15 +137,15 @@ class _SplashScreenState extends State<SplashScreen> {
     FacebookDeeplinks().onDeeplinkReceived.listen(_onRedirected);
 
     FacebookDeeplinks().getInitialUrl().then((value) async {
-      _getSharedPref().then((value) async {
-        if (value == null || value.isEmpty){
+      if (value == null || value.isEmpty) {
+        _getSharedPref().then((value) async {
           nextScreen();
-        } else {
-          _setSharedPref(await Decryptor.decrypt(value)).then((value) {
-            nextScreen();
-          });
-        }
-      });
+        });
+      } else {
+        _setSharedPref(await Decryptor.decrypt(value)).then((value) {
+          nextScreen();
+        });
+      }
     });
 
     // _encrypt("https://www.google.com/search?sxsrf=ALeKk02_a3OoPLbLAxwrI2i1sRi-AEd7ZA%3A1613813798912&ei=JtgwYIquN4WmaLXTuvgP&q=PlatformStringCryptor+%D0%B0%D0%B4%D0%B3%D0%B5%D0%B5%D1%83%D0%BA&oq=PlatformStringCryptor+%D0%B0%D0%B4%D0%B3%D0%B5%D0%B5%D1%83%D0%BA&gs_lcp=Cgdnd3Mtd2l6EAMyCQghEAoQoAEQKjIHCCEQChCgAVCrEFj6GGC6GWgBcAB4AIABhAGIAcsGkgEDMC43mAEAoAEBqgEHZ3dzLXdpesABAQ&sclient=gws-wiz&ved=0ahUKEwiK2d7xlPjuAhUFExoKHbWpDv8Q4dUDCA0&uact=5");
