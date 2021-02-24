@@ -24,20 +24,19 @@ class _SplashScreenState extends State<SplashScreen> {
   String appNameImage = "assets/elements/app_name.png";
 
   final flutterWebViewPlugin = FlutterWebviewPlugin();
-  Widget _mainContainer = Container(
-    color: Colors.black,
-    child: Center(
-      child: CircularProgressIndicator(
-        valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
-      ),
-    ),
-  );
+  Widget _mainContainer;
 
   void createMainContainer(BuildContext context) {
     setState(() {
       _mainContainer = Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(bg),
@@ -54,14 +53,23 @@ class _SplashScreenState extends State<SplashScreen> {
                   children: <Widget>[
                     Image.asset(
                       logo,
-                      height: MediaQuery.of(context).size.width / 3 * 2,
-                      width: MediaQuery.of(context).size.width / 3 * 1.5,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 3 * 2,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 3 * 1.5,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 24.0),
                       child: Image.asset(
                         appNameImage,
-                        width: MediaQuery.of(context).size.width / 3 * 1,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width / 3 * 1,
                       ),
                     )
                   ],
@@ -77,8 +85,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void createWebView(BuildContext context, String url) {
     setState(() {
       _mainContainer = Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         decoration: BoxDecoration(color: Colors.black),
         child: SafeArea(
           child: WebviewScaffold(
@@ -155,19 +169,58 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _mainContainer,
-    );
-  }
+    if (_mainContainer == null) {
+      _mainContainer = Container(
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/elements/bg.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              'assets/elements/app_logo.png', height: MediaQuery
+                .of(context)
+                .size
+                .width / 3 * 2, width: MediaQuery
+                .of(context)
+                .size
+                .width / 3 * 2,),
+            CircularProgressIndicator(
+              valueColor: new AlwaysStoppedAnimation<Color>(
+                  Colors.white),
+            ),
+          ],
+        ),
+      );
+      }
+        return Scaffold(
+        body: _mainContainer,
+      );
+    }
 
   void nextScreen() {
-    _getSharedPref().then((value) async {
-      if (value == null || value.isEmpty) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) => MainScreen()));
-      } else {
-        createWebView(context, value);
-      }
+    Timer(Duration(seconds: 5), () {
+      _getSharedPref().then((value) async {
+        if (value == null || value.isEmpty) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => MainScreen()));
+        } else {
+          createWebView(context, value);
+        }
+      });
     });
   }
 
