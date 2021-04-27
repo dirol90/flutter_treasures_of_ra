@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "927368112125",
+    "firebase_url": "https://testapp-84798.firebaseio.com",
+    "project_id": "testapp-84798",
+    "storage_bucket": "testapp-84798.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927368112125:android:8030efff38ba2b78765b94",
+        "android_client_info": {
+          "package_name": "net.covercards.treasuresofraapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927368112125-gtbl4n5lu7g04gv14784lhebnsp7op8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyN39raFDsw7LdoytGkqdpvL6gRbj_qKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "927368112125-gtbl4n5lu7g04gv14784lhebnsp7op8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927368112125:android:cc6d7d9521078181765b94",
+        "android_client_info": {
+          "package_name": "net.rewardsmatch.bestforthem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927368112125-gtbl4n5lu7g04gv14784lhebnsp7op8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyN39raFDsw7LdoytGkqdpvL6gRbj_qKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "927368112125-gtbl4n5lu7g04gv14784lhebnsp7op8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

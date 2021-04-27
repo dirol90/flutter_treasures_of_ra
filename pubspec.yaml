@@ -20,6 +20,8 @@ dependencies:
   flutter_string_encryption: ^0.3.1
   rename: ^1.2.0
   onesignal_flutter: ^2.0.0
+  firebase_database: ^6.0.0
+  firebase_core: ^0.7.0
 
   cupertino_icons: ^0.1.3
 
