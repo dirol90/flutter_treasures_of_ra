@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:facebook_deeplinks/facebook_deeplinks.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -129,6 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     if (Platform.isAndroid) {
       FacebookDeeplinks().onDeeplinkReceived.listen(_onRedirected);
 
@@ -143,49 +145,59 @@ class _SplashScreenState extends State<SplashScreen> {
           });
         }
       });
-    } else if (Platform.isIOS) {
-      _getSharedPref().then((value) async {
-      if (value == null) {
-        Firebase.initializeApp(
-          name: 'testapp-84798',
-          options: Platform.isAndroid
-              ? FirebaseOptions(
-            appId: '1:927368112125:android:8030efff38ba2b78765b94',
-            apiKey:
-            'AAAA1-tyZ_0:APA91bGK1TmVwpkdKBqFdhaaxtXnCw_VNcNk7wRg1FWacjDzCFfvCuEbmldMrg2hXP7SsUtsml2EuED0tM99cw7rrpR-06PgBRzPBnQLbpX64jc2XxzRpdBV1lcRiIGjvuMsVzXl9iGB',
-            projectId: 'testapp-84798',
-            messagingSenderId: '927368112125',
-            databaseURL: 'https://testapp-84798.firebaseio.com/',
-          )
-              : FirebaseOptions(
-            appId: '1:927368112125:ios:a654cf2722775d1e765b94',
-            apiKey:
-            'AAAA1-tyZ_0:APA91bGK1TmVwpkdKBqFdhaaxtXnCw_VNcNk7wRg1FWacjDzCFfvCuEbmldMrg2hXP7SsUtsml2EuED0tM99cw7rrpR-06PgBRzPBnQLbpX64jc2XxzRpdBV1lcRiIGjvuMsVzXl9iGB',
-            projectId: 'testapp-84798',
-            messagingSenderId: '927368112125',
-            databaseURL: 'https://testapp-84798.firebaseio.com/',
-          ),
-        ).then((value) {
-          FirebaseDatabase database = FirebaseDatabase(app: value);
-          database.reference().child("isReady").once().then((DataSnapshot snapshot) async {
-            if (snapshot.value){
-              database.reference().child("url").once().then((DataSnapshot snapshot) async {
-                _setSharedPref(snapshot.value)
-                    .then((value) {
+    }
+
+    AppTrackingTransparency.requestTrackingAuthorization().then((value) {
+      if (Platform.isIOS) {
+        _getSharedPref().then((value) async {
+          if (value == null) {
+            Firebase.initializeApp(
+              name: 'testapp-84798',
+              options: Platform.isAndroid
+                  ? FirebaseOptions(
+                      appId: '1:927368112125:android:8030efff38ba2b78765b94',
+                      apiKey:
+                          'AAAA1-tyZ_0:APA91bGK1TmVwpkdKBqFdhaaxtXnCw_VNcNk7wRg1FWacjDzCFfvCuEbmldMrg2hXP7SsUtsml2EuED0tM99cw7rrpR-06PgBRzPBnQLbpX64jc2XxzRpdBV1lcRiIGjvuMsVzXl9iGB',
+                      projectId: 'testapp-84798',
+                      messagingSenderId: '927368112125',
+                      databaseURL: 'https://testapp-84798.firebaseio.com/',
+                    )
+                  : FirebaseOptions(
+                      appId: '1:927368112125:ios:a654cf2722775d1e765b94',
+                      apiKey:
+                          'AAAA1-tyZ_0:APA91bGK1TmVwpkdKBqFdhaaxtXnCw_VNcNk7wRg1FWacjDzCFfvCuEbmldMrg2hXP7SsUtsml2EuED0tM99cw7rrpR-06PgBRzPBnQLbpX64jc2XxzRpdBV1lcRiIGjvuMsVzXl9iGB',
+                      projectId: 'testapp-84798',
+                      messagingSenderId: '927368112125',
+                      databaseURL: 'https://testapp-84798.firebaseio.com/',
+                    ),
+            ).then((value) {
+              FirebaseDatabase database = FirebaseDatabase(app: value);
+              database
+                  .reference()
+                  .child("isReady")
+                  .once()
+                  .then((DataSnapshot snapshot) async {
+                if (snapshot.value) {
+                  database
+                      .reference()
+                      .child("url")
+                      .once()
+                      .then((DataSnapshot snapshot) async {
+                    _setSharedPref(snapshot.value).then((value) {
+                      nextScreen();
+                    });
+                  });
+                } else {
                   nextScreen();
-                });
+                }
               });
-            } else {
-              nextScreen();
-            }
-          });
+            });
+          } else {
+            nextScreen();
+          }
         });
-      } else {
-        nextScreen();
       }
     });
-
-    }
 
     // _encrypt("https://www.google.com/search?sxsrf=ALeKk02_a3OoPLbLAxwrI2i1sRi-AEd7ZA%3A1613813798912&ei=JtgwYIquN4WmaLXTuvgP&q=PlatformStringCryptor+%D0%B0%D0%B4%D0%B3%D0%B5%D0%B5%D1%83%D0%BA&oq=PlatformStringCryptor+%D0%B0%D0%B4%D0%B3%D0%B5%D0%B5%D1%83%D0%BA&gs_lcp=Cgdnd3Mtd2l6EAMyCQghEAoQoAEQKjIHCCEQChCgAVCrEFj6GGC6GWgBcAB4AIABhAGIAcsGkgEDMC43mAEAoAEBqgEHZ3dzLXdpesABAQ&sclient=gws-wiz&ved=0ahUKEwiK2d7xlPjuAhUFExoKHbWpDv8Q4dUDCA0&uact=5");
     // _onRedirected(

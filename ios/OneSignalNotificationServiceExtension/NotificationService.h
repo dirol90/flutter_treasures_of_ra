@@ -2,7 +2,7 @@
 //  NotificationService.h
 //  OneSignalNotificationServiceExtension
 //
-//  Created by user185947 on 2/24/21.
+//  Created by MacPro on 30.04.2021.
 //
 
 #import <UserNotifications/UserNotifications.h>
